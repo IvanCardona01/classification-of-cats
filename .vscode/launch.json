@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug classificationOfCatsApp",
+            "program": "${workspaceFolder:classificationOfCatsApp}/.build/debug/classificationOfCatsApp",
+            "args": [],
+            "cwd": "${workspaceFolder:classificationOfCatsApp}",
+            "preLaunchTask": "swift: Build Debug classificationOfCatsApp"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release classificationOfCatsApp",
+            "program": "${workspaceFolder:classificationOfCatsApp}/.build/release/classificationOfCatsApp",
+            "args": [],
+            "cwd": "${workspaceFolder:classificationOfCatsApp}",
+            "preLaunchTask": "swift: Build Release classificationOfCatsApp"
+        }
+    ]
+}
