@@ -4,7 +4,7 @@ let load = Main()
 
 class Main{
 
-    let run = CatView()
+    let run: CatPrincipalView = CatPrincipalView() 
     
     init() {
         run.start()
