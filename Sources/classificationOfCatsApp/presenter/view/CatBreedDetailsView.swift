@@ -30,6 +30,7 @@ class CatBreedDetailsView{
                         exit = true
                     }else{
                         if selectedBreedIsAvailable(selectedBreed: selectedBreedTypeInt) {
+                            viewUtilities.clearScreem();
                             let catIndexInTheCatsList = selectedBreedTypeInt - 1
                             let catSelected = catsList![catIndexInTheCatsList]
                             let catDescription = catSelected.description

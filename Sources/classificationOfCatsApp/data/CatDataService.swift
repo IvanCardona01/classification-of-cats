@@ -9,7 +9,7 @@ class CatDataService{
     
     func getBreeds(completion: @escaping ([Cat]) -> ()) {
         
-        let url = URL(string: "https://api.thecatapi.com/v1/breeds")!
+        let url = URL(string: "https://api.thecatapi.com/v1/breeds?limit=50")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
