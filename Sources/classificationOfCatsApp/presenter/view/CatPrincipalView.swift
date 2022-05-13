@@ -5,6 +5,7 @@ class CatPrincipalView{
     let viewUtilities = ViewUtilities.instance
     let catsVotingView = CatsVotingView.instance
     let breedsQualificationView = BreedsQualificationView.instance
+    let catBreedDetailsView = CatBreedDetailsView.instance
     let keysOfUserDefaults = KeysOfUserDefaults()
 
     func start(){
@@ -41,7 +42,7 @@ class CatPrincipalView{
                     breedsQualificationView.loadQualificationSystem()
                     break
                 case "3":
-                    
+                    catBreedDetailsView.loadCatBreedsList()
                     break
                 default:
                     print("System Error")
