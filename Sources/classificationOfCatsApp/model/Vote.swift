@@ -1,9 +1,9 @@
 class Vote: Codable{
-    let cat_id: String
+    let breed: String
     var vows: Int 
 
-    init(cat_id: String, voteValue: Int){
-        self.cat_id = cat_id
+    init(breed: String, voteValue: Int){
+        self.breed = breed
         self.vows = voteValue
     }
 
