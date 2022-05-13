@@ -3,40 +3,50 @@ import Foundation
 class CatPrincipalView{
     let catDataService = CatDataService.instance
     let viewUtilities = ViewUtilities.instance
-    var catsList:[Cat]?
+    let catsVotingView = CatsVotingView.instance
+    let keysOfUserDefaults = KeysOfUserDefaults()
 
     func start(){
         catDataService.getBreeds(){ (cats) in
-            self.catsList = cats
-        }
-        var optionIsAvailable = false
-        var selectedOption: String
-        repeat{
-            print(getPrincipalMenu())
-            selectedOption = readLine()!
-            if selectedOptionIsAvailable(selectedOption: selectedOption){
-                optionIsAvailable = true;
-            }else{
-                print("Option is not available\n\nPress any key to continue")
-                readLine()!
-            }
-        }while optionIsAvailable == false
+            do{
+                try? self.catDataService.setCatsListInUserDefault(data: cats)
 
-        switch selectedOption{
-            case "1":
-                print("Option 1")
-                break
-            case "2":
-                print("Option 2")
-                break
-            case "3":
-                print("Option 3")
-                break
-            default:
-                print("System Error")
-                break
+                let vows: [Vote] = []
+                try? self.catDataService.setVowsListInUserDefault(data: vows)
+            }catch Errors.dataIsNotEncodable{
+                print("An unexpected error occurred while trying to save the data list")
+            }
         }
-        print(catsList!)
+        let infinitCicle = true
+        repeat{
+            var optionIsAvailable = false
+            var selectedOption: String
+            repeat{
+                print(getPrincipalMenu())
+                selectedOption = readLine()!
+                if selectedOptionIsAvailable(selectedOption: selectedOption){
+                    optionIsAvailable = true;
+                }else{
+                    print("Option is not available\n\nPress any key to continue")
+                    readLine()!
+                }
+            }while optionIsAvailable == false
+
+            switch selectedOption{
+                case "1":
+                    catsVotingView.start()
+                    break
+                case "2":
+                    
+                    break
+                case "3":
+                    
+                    break
+                default:
+                    print("System Error")
+                    break
+            }
+        }while infinitCicle == true
     }
 
     func getPrincipalMenu() -> String{
@@ -60,6 +70,5 @@ class CatPrincipalView{
         }
         return isAvalible 
     }
-
 
 }
