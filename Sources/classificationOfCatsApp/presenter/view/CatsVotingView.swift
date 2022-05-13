@@ -8,32 +8,10 @@ class CatsVotingView{
     var catsList: [Cat]?
     var vowsList: [Vote]?
 
-    func start(){
+    func loadTheVotingSystem(){
         viewUtilities.clearScreem()
         loadCatsList()
         loadVowsList()
-        loadTheVotingSystem()
-    }
-
-    func loadCatsList(){
-        do{
-             catsList = try? catDataService.getCatsListOfUserDefaults();
-             UserDefaults.standard.synchronize()
-        }catch Errors.dataIsNotDecodable{
-            print("Error trying to get cats list")
-        }
-    }
-
-    func loadVowsList(){
-        do{
-             vowsList = try? catDataService.getVowsListOfUserDefaults();
-             UserDefaults.standard.synchronize()
-        }catch Errors.dataIsNotDecodable{
-            print("Error trying to get cats list")
-        }
-    }
-
-    func loadTheVotingSystem(){
         var exitOption = false
         repeat{
             print(loadCatProfile(catIndex: catIndexInTheListOfCats))
@@ -75,14 +53,32 @@ class CatsVotingView{
         }while exitOption == false
     }
 
+    func loadCatsList(){
+        do{
+             catsList = try? catDataService.getCatsListOfUserDefaults();
+             UserDefaults.standard.synchronize()
+        }catch Errors.dataIsNotDecodable{
+            print("Error trying to get cats list")
+        }
+    }
+
+    func loadVowsList(){
+        do{
+             vowsList = try? catDataService.getVowsListOfUserDefaults();
+             UserDefaults.standard.synchronize()
+        }catch Errors.dataIsNotDecodable{
+            print("Error trying to get cats list")
+        }
+    }
+
     func addVote(voteValue: Int, catIndex: Int){
-        let cat_id = catsList![catIndex].id
-        let voteSelected = getVoteExists(cat_id: cat_id)
+        let breed = catsList![catIndex].name
+        let voteSelected = getVoteExists(breed: breed)
         let voteExists = voteSelected != nil
         if (voteExists){
             voteSelected?.addVote(voteValue: voteValue)
         }else{
-            let vote: Vote = Vote(cat_id: cat_id, voteValue: voteValue)
+            let vote: Vote = Vote(breed: breed, voteValue: voteValue)
             vowsList?.append(vote)
         }
 
@@ -94,12 +90,12 @@ class CatsVotingView{
         UserDefaults.standard.synchronize()
     }
 
-    func getVoteExists(cat_id:String) -> Vote?{
+    func getVoteExists(breed:String) -> Vote?{
         if ((vowsList?.isEmpty) == nil) {
             return nil
         }else{
             for vote in vowsList!{
-                if(vote.cat_id.elementsEqual(cat_id)){
+                if(vote.breed.elementsEqual(breed)){
                     return vote
                 }
             }

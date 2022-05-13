@@ -4,6 +4,7 @@ class CatPrincipalView{
     let catDataService = CatDataService.instance
     let viewUtilities = ViewUtilities.instance
     let catsVotingView = CatsVotingView.instance
+    let breedsQualificationView = BreedsQualificationView.instance
     let keysOfUserDefaults = KeysOfUserDefaults()
 
     func start(){
@@ -34,10 +35,10 @@ class CatPrincipalView{
 
             switch selectedOption{
                 case "1":
-                    catsVotingView.start()
+                    catsVotingView.loadTheVotingSystem()
                     break
                 case "2":
-                    
+                    breedsQualificationView.loadQualificationSystem()
                     break
                 case "3":
                     
