@@ -3,12 +3,9 @@ struct Cat: Codable {
     var name: String
     var description: String
     var origin: String
-    var image:Image
+    var image:Image?
 }    
 
 struct Image: Codable{
-    let id: String
-    let width:Int
-    let height: Int
-    let url: String
+    let url: String?
 }
