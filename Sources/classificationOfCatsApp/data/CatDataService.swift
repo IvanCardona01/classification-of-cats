@@ -9,7 +9,7 @@ class CatDataService{
     
     func getBreeds(completion: @escaping ([Cat]) -> ()) {
         
-        let url = URL(string: "https://api.thecatapi.com/v1/breeds?limit=50")!
+        let url = URL(string: "https://api.thecatapi.com/v1/breeds")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
@@ -25,9 +25,7 @@ class CatDataService{
             }catch{ 
                 return
             }
-        
         }.resume()
-
     }
 
     func getCatsListOfUserDefaults()throws -> [Cat]{
@@ -62,4 +60,3 @@ class CatDataService{
         UserDefaults.standard.synchronize()
     }
 }
-
