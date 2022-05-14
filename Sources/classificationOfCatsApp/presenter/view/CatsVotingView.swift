@@ -105,12 +105,17 @@ class CatsVotingView{
 
     func loadCatProfile(catIndex: Int) -> String{
         viewUtilities.clearScreem()
+        let catProfile = catsList![catIndex]
         var profile:String = "****************************\n" +
-                             "* Name: \(catsList![catIndex].name)\n" +
-                             "* Id: \(catsList![catIndex].id)\n" +
-                             "* Origin: \(catsList![catIndex].origin)\n" +
-                             "* Image: //url\n" +
-                             "****************************"
+                             "* Name: \(catProfile.name)\n" +
+                             "* Id: \(catProfile.id)\n" +
+                             "* Origin: \(catProfile.origin)\n"
+        if(catProfile.image != nil){
+            profile.append("* Image: \(catProfile.image!.url!)\n" +
+                             "****************************")
+        }else{
+            profile.append("****************************")
+        }
         let previousPageLimit = 0
         let nextPageLimit = catsList!.count - 1
         let actualPage = catIndex 

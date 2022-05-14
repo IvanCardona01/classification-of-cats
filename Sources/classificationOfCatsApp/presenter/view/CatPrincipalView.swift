@@ -5,20 +5,14 @@ class CatPrincipalView{
     let viewUtilities = ViewUtilities.instance
     let catsVotingView = CatsVotingView.instance
     let breedsQualificationView = BreedsQualificationView.instance
+    let catBreedDetailsView = CatBreedDetailsView.instance
     let keysOfUserDefaults = KeysOfUserDefaults()
 
     func start(){
-        catDataService.getBreeds(){ (cats) in
-            do{
-                try? self.catDataService.setCatsListInUserDefault(data: cats)
 
-                let vows: [Vote] = []
-                try? self.catDataService.setVowsListInUserDefault(data: vows)
-            }catch Errors.dataIsNotEncodable{
-                print("An unexpected error occurred while trying to save the data list")
-            }
-        }
-        let infinitCicle = true
+        loadLists()
+
+        var exitOption = false
         repeat{
             var optionIsAvailable = false
             var selectedOption: String
@@ -41,13 +35,29 @@ class CatPrincipalView{
                     breedsQualificationView.loadQualificationSystem()
                     break
                 case "3":
-                    
+                    catBreedDetailsView.loadCatBreedsList()
+                    break
+                case "4":
+                    exitOption = true
+                    viewUtilities.clearScreem()
                     break
                 default:
                     print("System Error")
                     break
             }
-        }while infinitCicle == true
+        }while exitOption == false
+    }
+
+    func loadLists(){
+        catDataService.getBreeds(){ (cats) in
+            do{
+                try? self.catDataService.setCatsListInUserDefault(data: cats)
+                let vows: [Vote] = []
+                try? self.catDataService.setVowsListInUserDefault(data: vows)
+            }catch Errors.dataIsNotEncodable{
+                print("An unexpected error occurred while trying to save the data list")
+            }
+        }
     }
 
     func getPrincipalMenu() -> String{
@@ -56,13 +66,14 @@ class CatPrincipalView{
                           "* 1. Vote      *\n" +
                           "* 2. Vote list *\n" +
                           "* 3. Breeds    *\n" +
+                          "* 4. Exit      *\n" +
                           "****************"
         return menu
     }
 
     func selectedOptionIsAvailable(selectedOption: String) -> Bool {
         var isAvalible = false
-        let availableOptions = "123"
+        let availableOptions = "1234"
         let longAnswer = selectedOption.count
         let correctLong = longAnswer == 1
         let optionAvailable = availableOptions.contains(selectedOption)
@@ -71,5 +82,4 @@ class CatPrincipalView{
         }
         return isAvalible 
     }
-
 }

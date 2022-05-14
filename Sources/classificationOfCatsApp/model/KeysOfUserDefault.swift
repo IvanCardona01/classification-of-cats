@@ -1,8 +1,7 @@
-import Foundation
-
 struct KeysOfUserDefaults {
-    private let catsList: String = "catsList"
-    private let vowsList: String = "vowsList"
+    static let instance: KeysOfUserDefaults = KeysOfUserDefaults()
+    private let catsList: String = "getCatsList"
+    private let vowsList: String = "getVowsList"
 
     func getKeyOfCatsList() -> String{
         return catsList
