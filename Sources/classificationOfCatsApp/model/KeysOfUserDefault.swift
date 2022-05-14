@@ -1,5 +1,3 @@
-import Foundation
-
 struct KeysOfUserDefaults {
     static let instance: KeysOfUserDefaults = KeysOfUserDefaults()
     private let catsList: String = "getCatsList"
