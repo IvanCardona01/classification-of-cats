@@ -1,0 +1,9 @@
+* 1. ViewUtilities: Manejar Static function para acceder a los métodos en vez de crear 
+   instancias en todas las clases donde se utiliza.
+
+* 2. DataService: encode y decode cambiar por jsonDecoder() y jsonEncoder~()
+
+* 3. Implementar Clase Presenter. Contiene llamados a la red, lógica de datos, 
+     llamados de red etc.
+
+* 4. Implementar optional binding evitando force casting(!).

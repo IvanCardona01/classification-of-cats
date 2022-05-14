@@ -2,21 +2,26 @@ import Foundation
 
 class CatBreedDetailsView{
     static let instance: CatBreedDetailsView = CatBreedDetailsView()
-    let catDataService = CatDataService.instance
-    let viewUtilities = ViewUtilities()
+    let presenter = Presenter.instance
     var catsList: [Cat]?
 
     func loadCatBreedsList(){
         do{
-            UserDefaults.standard.synchronize()
-            catsList = try? catDataService.getCatsListOfUserDefaults() 
+            guard let cats = presenter.getCatsList() else {
+                print("Error loading cats list")
+                return
+            }
+            catsList = cats
             var exit = false
             repeat{
-                viewUtilities.clearScreem()
+                ViewUtilities.clearScreem()
 
                 printGraphicCatsList()
                 print("\nPlease select a breed")
-                let selectedBreedTypeString = readLine()!
+                guard let selectedBreedTypeString = readLine() else{
+                    print("Error input text is not available")
+                    return
+                }
 
                 if let selectedBreedTypeInt = Int(selectedBreedTypeString){
                     let exitOption = 0
@@ -27,8 +32,11 @@ class CatBreedDetailsView{
                     }
                 }else {
                     print("Option Is not available\nPlease input a number")
-                    print("\nPress any key to continue")
-                    readLine()!
+                    print("\nPress enter to continue")
+                    guard let _ = readLine() else {
+                        print("Error\nPress enter to continue")
+                        return
+                    }
                 }
             }while exit == false
         }catch Errors.dataIsNotDecodable {
@@ -39,7 +47,11 @@ class CatBreedDetailsView{
     func printGraphicCatsList(){
         var graphicCatsList = "*************************\n"
         var catIndexForTheUser = 1
-        for cat in catsList! {
+        guard let cats = catsList else {
+            print("Cats data is not available")
+            return
+        }
+        for cat in cats {
             graphicCatsList.append("* \(catIndexForTheUser) \(cat.name)\n" +
                                     "*************************\n")
             catIndexForTheUser += 1
@@ -51,22 +63,33 @@ class CatBreedDetailsView{
 
     func printCatDescription(selectedBreed: Int){
         if selectedBreedIsAvailable(selectedBreed: selectedBreed) {
-            viewUtilities.clearScreem();
+            ViewUtilities.clearScreem();
+            guard let cats = catsList else {
+                print("Cats data is not available")
+                return
+            }
             let catIndexInTheCatsList = selectedBreed - 1
-            let catSelected = catsList![catIndexInTheCatsList]
+            let catSelected = cats[catIndexInTheCatsList]
             let catDescription = catSelected.description
             print(catDescription)
         }else{
             print("\nOption Is not available")
         }
-        print("\nPress any key to continue")
-        readLine()!
+        print("\nPress enter to continue")
+        guard let _ = readLine() else {
+            print("Error\nPress enter to continue")
+            return
+        }
     }
 
     func selectedBreedIsAvailable(selectedBreed: Int) -> Bool{
         let positionOfCatInTheList = selectedBreed - 1 
         let firstCatPosition = 0
-        let lastCatPosition = catsList!.count - 1 
+        guard let cats = catsList else {
+            print("Cats data is not available")
+            return false
+        }
+        let lastCatPosition = cats.count - 1 
         let selectedBreedIsBetweenRangeAvailable = positionOfCatInTheList >= firstCatPosition && positionOfCatInTheList <= lastCatPosition
         return selectedBreedIsBetweenRangeAvailable
     }
