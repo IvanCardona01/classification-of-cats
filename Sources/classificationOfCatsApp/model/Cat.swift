@@ -7,5 +7,5 @@ struct Cat: Codable {
 }    
 
 struct Image: Codable{
-    let url: String?
+    let url: String
 }
